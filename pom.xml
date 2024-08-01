@@ -55,53 +55,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-data-jpa</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-security</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-web</artifactId>-->
-<!--		</dependency>-->
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.apache.commons</groupId>-->
-<!--			<artifactId>commons-collections4</artifactId>-->
-<!--			<version>4.4</version>-->
-<!--		</dependency>-->
-<!--		&lt;!&ndash; https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 &ndash;&gt;-->
-<!--		<dependency>-->
-<!--			<groupId>org.apache.commons</groupId>-->
-<!--			<artifactId>commons-lang3</artifactId>-->
-<!--			<version>3.10</version>-->
-<!--		</dependency>-->
-
-<!--		<dependency>-->
-<!--			<groupId>mysql</groupId>-->
-<!--			<artifactId>mysql-connector-java</artifactId>-->
-<!--			<scope>runtime</scope>-->
-<!--		</dependency>-->
-<!--		<dependency>-->
-<!--			<groupId>org.springframework.boot</groupId>-->
-<!--			<artifactId>spring-boot-starter-test</artifactId>-->
-<!--			<scope>test</scope>-->
-<!--			<exclusions>-->
-<!--				<exclusion>-->
-<!--					<groupId>org.junit.vintage</groupId>-->
-<!--					<artifactId>junit-vintage-engine</artifactId>-->
-<!--				</exclusion>-->
-<!--			</exclusions>-->
-<!--		</dependency>-->
-
 	</dependencies>
 
 	<build>

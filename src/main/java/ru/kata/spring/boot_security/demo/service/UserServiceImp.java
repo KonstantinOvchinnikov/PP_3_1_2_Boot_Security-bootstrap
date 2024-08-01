@@ -16,6 +16,7 @@ import javax.persistence.PersistenceContext;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Service("customUserService")
 public class UserServiceImp implements UserDetailsService {
@@ -34,24 +35,22 @@ public class UserServiceImp implements UserDetailsService {
         return userRepository.findAll();
     }
 
-
     public void saveUser(User user) {
 
-        user.setRoles(Collections.singleton(new Role(1L)));
+        user.setRoles(Collections.singleton(new Role(1L, "USER")));
         user.setPassword(user.getPassword());
         userRepository.save(user);
 
     }
 
     public void deleteUser(long id) {
-            userRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
-
 
     public void updateUser(User user) {
-        user.setRoles(Collections.singleton(new Role(1L)));
         userRepository.save(user);
     }
+
     public User showUserById(long id) {
         String hql = "select u from User u where id=:id";
         return em.createQuery(hql, User.class).setParameter("id", id).getSingleResult();

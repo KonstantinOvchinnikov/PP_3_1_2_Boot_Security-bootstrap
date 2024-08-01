@@ -19,7 +19,6 @@ public class UserController {
         this.userService = userService;
     }
 
-
     @GetMapping()
     public String showUser(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("user", userService.showUserByLogin(userDetails.getUsername()));

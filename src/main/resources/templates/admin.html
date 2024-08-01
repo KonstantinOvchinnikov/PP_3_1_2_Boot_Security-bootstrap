@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en" >
+<html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css"
-          th:href="@{/css/style.css}">
+
     <meta charset="UTF-8">
     <title>Users</title>
 </head>
@@ -11,7 +10,7 @@
 <h1>User List</h1>
 
 <br/>
-<a  class="btn" th:href="@{/admin/new}" >Save user</a>
+<a th:href="@{/admin/new}">Save user</a>
 <br/>
 <div>
     <table border="1">
@@ -35,6 +34,7 @@
             <td><a class="btn" th:href="@{/admin/show(id=${user.id})}">Show</a></td>
 
     </table>
+    <a href="/logout">Logout</a>
 </div>
 </body>
 </html>

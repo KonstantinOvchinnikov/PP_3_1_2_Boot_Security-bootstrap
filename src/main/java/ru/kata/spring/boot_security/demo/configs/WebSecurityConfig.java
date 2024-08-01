@@ -29,7 +29,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
 
 
-
     public WebSecurityConfig(SuccessUserHandler successUserHandler) {
         this.successUserHandler = successUserHandler;
     }
@@ -40,16 +39,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .antMatchers("/user/**").hasAnyAuthority("USER", "ADMIN")
-                .antMatchers("/").fullyAuthenticated()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin().failureUrl("/login")
-                .successHandler(successUserHandler);
+                .successHandler(successUserHandler)
+                .and()
+                .logout().logoutUrl("/logout")
+                .logoutSuccessUrl("/login");
     }
 
     @Bean
-    public SuccessUserHandler successHandler(){
-        return  new SuccessUserHandler();
+    public SuccessUserHandler successHandler() {
+        return new SuccessUserHandler();
     }
 
     @Bean
@@ -59,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return NoOpPasswordEncoder.getInstance();

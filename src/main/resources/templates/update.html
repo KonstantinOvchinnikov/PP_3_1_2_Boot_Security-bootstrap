@@ -9,7 +9,7 @@
 <h1>Update form</h1>
 
 <br/>
-<form th:method="POST" th:action="@{/admin/update(id=${user.getId})}" th:object="${user}">
+<form th:method="POST" th:action="@{/admin/update}" th:object="${user}">
     <input type="hidden" th:field="*{id}" id="id"/>
     <br>
     <label for="name">Enter name:</label>
@@ -25,10 +25,18 @@
     <input type="text" th:field="*{email}" id="email"/>
     <br>
     <label for="password">Enter password:</label>
-    <input type="text" th:field="*{password}" id="password"/>
+    <input type="password" th:field="*{password}" id="password"/>
     <br>
+    <label>Roles:
+        <input type="checkbox" name="roles"
+               th:each="role : ${roles}"
+               th:text="${role.role}"
+               th:value="${role.id}"
+               th:field="*{roles}"
+        />
+    </label>
     <input type="submit" value="UPDATE"/>
 </form>
-
+<a href="/logout">Logout</a>
 </body>
 </html>

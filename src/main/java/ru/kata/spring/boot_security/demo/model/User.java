@@ -2,10 +2,10 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,12 +21,13 @@ public class User implements UserDetails {
     private int age;
     private String email;
     private String password;
-    @Transient
-    private String passwordConfirm;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Role> roles;
-
-
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     public User() {
     }
@@ -39,15 +40,17 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-public String getStringAllRoles() {
-      return roles.stream().map(Role::toString).collect(Collectors.joining(", "));
+    public String getStringAllRoles() {
+        return roles.stream().map(Role::toString).collect(Collectors.joining(", "));
 
-}
+    }
+
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
-        this.id =id;
+        this.id = id;
     }
 
     public String getName() {
@@ -102,14 +105,6 @@ public String getStringAllRoles() {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
     }
 
     @Override
