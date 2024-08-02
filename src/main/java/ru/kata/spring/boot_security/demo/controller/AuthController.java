@@ -2,7 +2,7 @@ package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,7 +14,6 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 import ru.kata.spring.boot_security.demo.util.MyValidator;
 
-import javax.validation.Valid;
 import java.util.Collections;
 
 @Controller
@@ -32,7 +31,7 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String registrationPage( @ModelAttribute("user") User user) {
+    public String registrationPage(@ModelAttribute("user") User user) {
         return "/register";
     }
     @PostMapping("/register")

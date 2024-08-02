@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
@@ -15,7 +14,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service("customUserService")
@@ -49,11 +47,6 @@ public class UserServiceImp implements UserDetailsService, UserService {
         userRepository.deleteById(id);
     }
 
-    @Transactional
-    @Override
-    public void updateUser(User user) {
-        userRepository.save(user);
-    }
 
     @Override
     public User showUserById(long id) {

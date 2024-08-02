@@ -7,7 +7,6 @@
 </head>
 <body>
 <h1>Create form</h1>
-<h1 th:object="${b}"></h1>
 <br/>
 <form th:method="POST" th:action="@{/auth/register}" th:object="${user}">
     <label for="name">Enter name:</label>
@@ -21,6 +20,9 @@
     <br>
     <label for="email">Enter email:</label>
     <input type="text" th:field="*{email}" id="email"/>
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+        Email Error
+    </div>
     <br>
     <label for="password">Enter password:</label>
     <input type="text" th:field="*{password}" id="password"/>

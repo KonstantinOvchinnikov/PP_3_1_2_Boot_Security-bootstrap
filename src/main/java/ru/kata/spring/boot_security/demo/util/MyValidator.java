@@ -27,9 +27,6 @@ public class MyValidator implements Validator {
         }
         return true;
     }
-    public boolean correctEmail(String email) {
-        return email.matches("^[\\w-\\.]+@[\\w-]+(\\.[\\w-]+)*\\.[a-z]{2,}$");
-    }
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -40,7 +37,7 @@ public class MyValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
         if (userInData(user.getEmail())) {
-            errors.rejectValue("username", "", "A user with such an email already exists");
+            errors.rejectValue("email", "", "Пользователь с таким почтовым адресом уже существует");
         }
     }
 }
