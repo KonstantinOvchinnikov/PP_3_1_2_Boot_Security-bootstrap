@@ -6,20 +6,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Service("customUserService")
-public class UserServiceImp implements UserDetailsService {
+public class UserServiceImp implements UserDetailsService, UserService {
     @PersistenceContext
     private EntityManager em;
     private final UserRepository userRepository;
@@ -31,35 +29,37 @@ public class UserServiceImp implements UserDetailsService {
         this.roleRepository = roleRepository;
     }
 
+    @Override
     public List<User> showAllUsers() {
         return userRepository.findAll();
     }
 
+    @Transactional
+    @Override
     public void saveUser(User user) {
-
-        user.setRoles(Collections.singleton(new Role(1L, "USER")));
-        user.setPassword(user.getPassword());
         userRepository.save(user);
 
     }
 
+    @Transactional
+    @Override
     public void deleteUser(long id) {
         userRepository.deleteById(id);
     }
 
-    public void updateUser(User user) {
-        userRepository.save(user);
-    }
 
+    @Override
     public User showUserById(long id) {
         String hql = "select u from User u where id=:id";
         return em.createQuery(hql, User.class).setParameter("id", id).getSingleResult();
     }
 
+    @Override
     public User showUserByLogin(String login) {
         String hql = "select u from User u where email=:email";
         return em.createQuery(hql, User.class).setParameter("email", login).getSingleResult();
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
