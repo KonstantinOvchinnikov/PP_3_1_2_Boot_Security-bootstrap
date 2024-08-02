@@ -16,7 +16,6 @@ import javax.persistence.PersistenceContext;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 @Service("customUserService")
 public class UserServiceImp implements UserDetailsService {
@@ -36,9 +35,7 @@ public class UserServiceImp implements UserDetailsService {
     }
 
     public void saveUser(User user) {
-
         user.setRoles(Collections.singleton(new Role(1L, "USER")));
-        user.setPassword(user.getPassword());
         userRepository.save(user);
 
     }
@@ -60,6 +57,7 @@ public class UserServiceImp implements UserDetailsService {
         String hql = "select u from User u where email=:email";
         return em.createQuery(hql, User.class).setParameter("email", login).getSingleResult();
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

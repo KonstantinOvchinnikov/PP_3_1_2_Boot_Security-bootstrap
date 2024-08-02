@@ -33,18 +33,12 @@ public class AdminController {
         } else {
             model.addAttribute("list", userService.showUserById(id));
         }
-        return "/admin";
+        return "/head";
     }
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
-        return "/new";
-    }
-
-    @PostMapping()
-    public String create(@ModelAttribute("user") User user) {
-        userService.saveUser(user);
-        return "redirect:/admin";
+        return "/update";
     }
 
     @GetMapping("/delete")
@@ -54,9 +48,14 @@ public class AdminController {
     }
 
     @GetMapping("/update")
-    public ModelAndView editUser(@RequestParam("id") Long id) {
-        User user = userService.showUserById(id);
-        ModelAndView mav = new ModelAndView("update");
+    public ModelAndView createOrEditUser(@RequestParam(name = "id", defaultValue = "0") Long id) {
+        User user;
+        if (id == 0) {
+            user = new User("Name", "Surname", 0, "email@name.host", "Password");
+        } else {
+            user = userService.showUserById(id);
+        }
+        ModelAndView mav = new ModelAndView("/update");
         mav.addObject("user", user);
         List<Role> roles = roleRepository.findAll();
         mav.addObject("roles", roles);
