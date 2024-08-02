@@ -21,6 +21,8 @@ public class User implements UserDetails {
     private int age;
     private String email;
     private String password;
+    @Transient
+    private String passwordConfirm;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
@@ -30,6 +32,14 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
     public User() {
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     public User(String name, String surname, int age, String email, String password) {

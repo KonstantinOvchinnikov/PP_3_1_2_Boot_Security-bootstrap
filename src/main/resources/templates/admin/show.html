@@ -17,7 +17,6 @@
             <th>Surname</th>
             <th>Age</th>
             <th>Email</th>
-            <th>Password</th>
             <th>Access rights</th>
         </tr>
         <tr th:object="${user}">
@@ -26,7 +25,6 @@
             <td th:utext="${user.surname}">...</td>
             <td th:utext="${user.age}">...</td>
             <td th:utext="${user.email}">...</td>
-            <td th:utext="${user.password}">...</td>
             <td th:utext="${user.getStringAllRoles()}">...</td>
             <td><a th:href="@{/admin/delete(id=${user.id})}">Delete</a></td>
             <td><a th:href="@{/admin/update(id=${user.id})}">Update</a></td>

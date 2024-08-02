@@ -20,7 +20,6 @@
             <th>Surname</th>
             <th>Age</th>
             <th>Email</th>
-            <th>Password</th>
         </tr>
         <tr th:each="user : ${list}">
             <td th:utext="${user.id}">...</td>
@@ -28,7 +27,6 @@
             <td th:utext="${user.surname}">...</td>
             <td th:utext="${user.age}">...</td>
             <td th:utext="${user.email}">...</td>
-            <td th:utext="${user.password}">...</td>
             <td><a class="btn" th:href="@{/admin/delete(id=${user.id})}">Delete</a></td>
             <td><a class="btn" th:href="@{/admin/update(id=${user.id})}">Update</a></td>
             <td><a class="btn" th:href="@{/admin/show(id=${user.id})}">Show</a></td>

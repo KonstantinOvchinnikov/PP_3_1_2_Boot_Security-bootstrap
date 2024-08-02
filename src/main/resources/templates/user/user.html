@@ -15,14 +15,12 @@
         <th>Surname</th>
         <th>Age</th>
         <th>Email</th>
-        <th>Password</th>
     </tr>
     <tr th:object="${user}">
         <td th:utext="${user.name}">...</td>
         <td th:utext="${user.surname}">...</td>
         <td th:utext="${user.age}">...</td>
         <td th:utext="${user.email}">...</td>
-        <td th:utext="${user.password}">...</td>
 </table>
 <a href="/logout">Logout</a>
 </body>

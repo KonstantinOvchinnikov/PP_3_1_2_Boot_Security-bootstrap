@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import ru.kata.spring.boot_security.demo.model.User;
@@ -16,17 +18,23 @@ import javax.transaction.Transactional;
 
 import java.util.List;
 
-@Service("customUserService")
+@Service
 public class UserServiceImp implements UserDetailsService, UserService {
     @PersistenceContext
     private EntityManager em;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     public UserServiceImp(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+
+    }
+
+    public PasswordEncoder getPasswordEncoder() {
+        return this.passwordEncoder;
     }
 
     @Override
@@ -37,8 +45,8 @@ public class UserServiceImp implements UserDetailsService, UserService {
     @Transactional
     @Override
     public void saveUser(User user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-
     }
 
     @Transactional
@@ -46,7 +54,6 @@ public class UserServiceImp implements UserDetailsService, UserService {
     public void deleteUser(long id) {
         userRepository.deleteById(id);
     }
-
 
     @Override
     public User showUserById(long id) {
