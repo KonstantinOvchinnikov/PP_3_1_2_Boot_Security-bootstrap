@@ -38,12 +38,12 @@ public class AdminController {
         } else {
             model.addAttribute("list", userService.showUserById(id));
         }
-        return "/head";
+        return "/admin/head";
     }
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user) {
-        return "/update";
+        return "/admin/saveOrEditUser";
     }
 
     @GetMapping("/delete")
@@ -60,7 +60,7 @@ public class AdminController {
         } else {
             user = userService.showUserById(id);
         }
-        ModelAndView mav = new ModelAndView("/update");
+        ModelAndView mav = new ModelAndView("/admin/saveOrEditUser");
         mav.addObject("user", user);
         List<Role> roles = roleRepository.findAll();
         mav.addObject("roles", roles);
@@ -70,21 +70,22 @@ public class AdminController {
     @PostMapping("/update")
     public ModelAndView createOrEditUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
         myValidator.validate(user, bindingResult);
-        if (bindingResult.hasErrors() && !Objects.equals(user.getId(), userService.showUserByLogin(user.getEmail()).getId())) {
-            ModelAndView mav = new ModelAndView("/update");
-            mav.addObject("user", user);
-            List<Role> roles = roleRepository.findAll();
-            mav.addObject("roles", roles);
+        if (bindingResult.hasErrors()) {
+                ModelAndView mav = new ModelAndView("/admin/saveOrEditUser");
+                mav.addObject("user", user);
+                List<Role> roles = roleRepository.findAll();
+                mav.addObject("roles", roles);
+                return mav;
+            }
+
+            ModelAndView mav = new ModelAndView("redirect:/admin");
+            userService.saveUser(user);
             return mav;
         }
-        ModelAndView mav = new ModelAndView("redirect:/admin");
-        userService.saveUser(user);
-        return mav;
-    }
 
-    @GetMapping("/show")
-    public String show(Model model, @RequestParam("id") long id) {
-        model.addAttribute("user", userService.showUserById(id));
-        return "/show";
+        @GetMapping("/show")
+        public String show (Model model,@RequestParam("id") long id){
+            model.addAttribute("user", userService.showUserById(id));
+            return "/admin/show";
+        }
     }
-}

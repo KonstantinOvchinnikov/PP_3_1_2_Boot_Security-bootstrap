@@ -3,14 +3,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Update User</title>
+    <title>New User</title>
 </head>
 <body>
-<h1>Update form</h1>
+<h1>Create form</h1>
 <br/>
-<form th:method="POST" th:action="@{/admin/update}" th:object="${user}">
-    <input type="hidden" th:field="*{id}" id="id"/>
-    <br>
+<form th:method="POST" th:action="@{/auth/register}" th:object="${user}">
     <label for="name">Enter name:</label>
     <input type="text" th:field="*{name}" id="name"/>
     <br>
@@ -28,17 +26,15 @@
     <br>
     <label for="password">Enter password:</label>
     <input type="password" th:field="*{password}" id="password"/>
+    <div style="color: red"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}" >
+        Password Error
+    </div>
     <br>
-    <label>Roles:
-        <input type="checkbox" name="roles"
-               th:each="role : ${roles}"
-               th:text="${role.role}"
-               th:value="${role.id}"
-               th:field="*{roles}"
-        />
-    </label>
-    <input type="submit" value="SAVE"/>
+    <label for="passwordConfirm">Confirm password:</label>
+    <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm"/>
+    <br>
+    <input type="submit" value="CREATE"/>
 </form>
-<a href="/logout">Logout</a>
+<a href="/login">Login</a>
 </body>
 </html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update User</title>
+</head>
+<body>
+<h1>Update form</h1>
+<br/>
+<form th:method="POST" th:action="@{/admin/update}" th:object="${user}">
+    <input type="hidden" th:field="*{id}" id="id"/>
+    <br>
+    <label for="name">Enter name:</label>
+    <input type="text" th:field="*{name}" id="name"/>
+    <br>
+    <label for="surname">Enter surname:</label>
+    <input type="text" th:field="*{surname}" id="surname"/>
+    <br>
+    <label for="age">Enter age:</label>
+    <input type="text" th:field="*{age}" id="age"/>
+    <br>
+    <label for="email">Enter email:</label>
+    <input type="text" th:field="*{email}" id="email"/>
+    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+        Email Error
+    </div>
+    <br>
+    <label for="password">Enter password:</label>
+    <input type="password" th:field="*{password}" id="password"/>
+    <div style="color: red"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}" >
+        Password Error
+    </div>
+    <br>
+    <label for="passwordConfirm">Confirm password:</label>
+    <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm"/>
+    <br>
+    <label>Roles:
+        <input type="checkbox" name="roles"
+               th:each="role : ${roles}"
+               th:text="${role.role}"
+               th:value="${role.id}"
+               th:field="*{roles}"
+        />
+    </label>
+    <input type="submit" value="SAVE"/>
+</form>
+<a href="/logout">Logout</a>
+</body>
+</html>
