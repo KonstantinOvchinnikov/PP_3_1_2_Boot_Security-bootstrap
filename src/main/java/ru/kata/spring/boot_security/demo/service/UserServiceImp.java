@@ -13,12 +13,13 @@ import ru.kata.spring.boot_security.demo.repository.UserRepository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import java.util.Collections;
 import java.util.List;
 
 @Service("customUserService")
-public class UserServiceImp implements UserDetailsService {
+public class UserServiceImp implements UserDetailsService, UserService {
     @PersistenceContext
     private EntityManager em;
     private final UserRepository userRepository;
@@ -30,29 +31,37 @@ public class UserServiceImp implements UserDetailsService {
         this.roleRepository = roleRepository;
     }
 
+    @Override
     public List<User> showAllUsers() {
         return userRepository.findAll();
     }
 
+    @Transactional
+    @Override
     public void saveUser(User user) {
-        user.setRoles(Collections.singleton(new Role(1L, "USER")));
         userRepository.save(user);
 
     }
 
+    @Transactional
+    @Override
     public void deleteUser(long id) {
         userRepository.deleteById(id);
     }
 
+    @Transactional
+    @Override
     public void updateUser(User user) {
         userRepository.save(user);
     }
 
+    @Override
     public User showUserById(long id) {
         String hql = "select u from User u where id=:id";
         return em.createQuery(hql, User.class).setParameter("id", id).getSingleResult();
     }
 
+    @Override
     public User showUserByLogin(String login) {
         String hql = "select u from User u where email=:email";
         return em.createQuery(hql, User.class).setParameter("email", login).getSingleResult();
