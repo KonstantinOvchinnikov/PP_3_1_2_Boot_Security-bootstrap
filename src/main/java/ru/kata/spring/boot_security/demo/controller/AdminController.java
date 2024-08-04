@@ -9,22 +9,21 @@ import org.springframework.web.servlet.ModelAndView;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
-import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 import ru.kata.spring.boot_security.demo.util.MyValidator;
 
 import java.util.List;
-import java.util.Objects;
 
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-    private final UserService userService;
+    private final UserServiceImp userService;
     private final RoleRepository roleRepository;
     private final MyValidator myValidator;
 
     @Autowired
-    public AdminController(UserService userService, RoleRepository roleRepository, MyValidator myValidator) {
+    public AdminController(UserServiceImp userService, RoleRepository roleRepository, MyValidator myValidator) {
         this.userService = userService;
         this.roleRepository = roleRepository;
         this.myValidator = myValidator;
