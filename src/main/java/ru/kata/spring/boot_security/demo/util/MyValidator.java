@@ -9,6 +9,7 @@ import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.repository.UserRepository;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
+import javax.transaction.Transactional;
 import java.util.Objects;
 
 @Component
@@ -23,20 +24,17 @@ public class MyValidator implements Validator {
         this.roleRepository = roleRepository;
         this.userService = userService;
     }
-
+    @Transactional
     public boolean userInData (String username) {
         User myUser = userRepository.findUserByEmailIs(username);
-        if (myUser == null) {
-            return false;
-        }
-        return true;
+        return myUser != null;
     }
 
     @Override
     public boolean supports(Class<?> clazz) {
         return User.class.equals(clazz);
     }
-
+    @Transactional
     @Override
     public void validate(Object target, Errors errors) {
         User user = (User) target;
