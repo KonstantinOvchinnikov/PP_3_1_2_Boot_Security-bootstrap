@@ -55,7 +55,7 @@ public class UserServiceImp implements UserDetailsService {
     }
 
     @Transactional
-    public User showUserById(long id) {
+    public User loadUserById(long id) {
         String hql = "select u from User u where id=:id";
         return em.createQuery(hql, User.class).setParameter("id", id).getSingleResult();
     }

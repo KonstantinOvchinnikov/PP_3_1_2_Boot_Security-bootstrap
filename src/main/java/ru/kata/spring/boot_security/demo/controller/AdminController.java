@@ -1,18 +1,16 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 import ru.kata.spring.boot_security.demo.util.MyValidator;
-
-import java.util.List;
 
 
 @Controller
@@ -31,60 +29,27 @@ public class AdminController {
 
 
     @GetMapping()
-    public String index(Model model, @RequestParam(value = "id", defaultValue = "0") long id) {
-        if (id == 0) {
-            model.addAttribute("list", userService.showAllUsers());
-        } else {
-            model.addAttribute("list", userService.showUserById(id));
-        }
-        return "/admin/head";
+    public String index(Model model, @RequestParam(value = "id", defaultValue = "0") long id,  @AuthenticationPrincipal UserDetails userDetails) {
+        model.addAttribute("newUser", new User());
+        model.addAttribute("authUser", userService.showUserByLogin(userDetails.getUsername()));
+        model.addAttribute("listUsers", userService.showAllUsers());
+        model.addAttribute("roles", roleRepository.findAll());
+        return "/admin/index";
     }
 
-    @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user) {
-        return "/admin/saveOrEditUser";
-    }
-
-    @GetMapping("/delete")
+    @PostMapping("/delete")
     public String delete(@RequestParam(value = "id") long id) {
         userService.deleteUser(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("/update")
-    public ModelAndView updateUser(@RequestParam(name = "id", defaultValue = "0") Long id) {
-        User user;
-        if (id == 0) {
-            user = new User("Name", "Surname", 0, "email@name.host", "Password");
-        } else {
-            user = userService.showUserById(id);
-        }
-        ModelAndView mav = new ModelAndView("/admin/saveOrEditUser");
-        mav.addObject("user", user);
-        List<Role> roles = roleRepository.findAll();
-        mav.addObject("roles", roles);
-        return mav;
-    }
-
-    @PostMapping("/update")
-    public ModelAndView createOrEditUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
+    @PostMapping
+    public String createOrEditUser(@ModelAttribute("user") User user, BindingResult bindingResult) {
         myValidator.validate(user, bindingResult);
         if (bindingResult.hasErrors()) {
-                ModelAndView mav = new ModelAndView("/admin/saveOrEditUser");
-                mav.addObject("user", user);
-                List<Role> roles = roleRepository.findAll();
-                mav.addObject("roles", roles);
-                return mav;
-            }
-
-            ModelAndView mav = new ModelAndView("redirect:/admin");
-            userService.saveUser(user);
-            return mav;
+            return "redirect:/admin";
         }
-
-        @GetMapping("/show")
-        public String show (Model model,@RequestParam("id") long id){
-            model.addAttribute("user", userService.showUserById(id));
-            return "/admin/show";
+            userService.saveUser(user);
+            return "redirect:/admin";
         }
     }

@@ -1,6 +1,8 @@
 package ru.kata.spring.boot_security.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
@@ -43,6 +45,7 @@ public class AuthController {
     public String registrationPage(@ModelAttribute("user") User user) {
         return "/auth/register";
     }
+
     @PostMapping("/register")
     public ModelAndView create(@ModelAttribute("user") User user, BindingResult bindingResult) {
         myValidator.validate(user, bindingResult);
