@@ -1,40 +1,75 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+          integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
     <title>New User</title>
 </head>
 <body>
-<h1>Create form</h1>
-<br/>
-<form th:method="POST" th:action="@{/auth/register}" th:object="${user}">
-    <label for="name">Enter name:</label>
-    <input type="text" th:field="*{name}" id="name"/>
-    <br>
-    <label for="surname">Enter surname:</label>
-    <input type="text" th:field="*{surname}" id="surname"/>
-    <br>
-    <label for="age">Enter age:</label>
-    <input type="text" th:field="*{age}" id="age"/>
-    <br>
-    <label for="email">Enter email:</label>
-    <input type="text" th:field="*{email}" id="email"/>
-    <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
-        Email Error
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+    <span class="navbar-brand">
+    Create form
+    </span>
+        <a type="text" style="color: gray" href="/login">Login</a>
     </div>
-    <br>
-    <label for="password">Enter password:</label>
-    <input type="password" th:field="*{password}" id="password"/>
-    <div style="color: red"  th:if="${#fields.hasErrors('password')}" th:errors="*{password}" >
-        Password Error
+</nav>
+<div class="card ">
+    <div class="card-body">
+        <div class="container">
+            <div class="row justify-content-center">
+                <form th:method="POST" th:action="@{/auth/register}" th:object="${user}"
+                      class="text-center w-50">
+                    <input type="hidden" th:field="*{id}" id="id-new"/>
+                    <div class="pt-2">
+                        <label for="name-new" class="form-label t">First name</label>
+                        <input required type="text" class="form-control" id="name-new"
+                               th:field="*{name}">
+                    </div>
+                    <div class="pt-2">
+                        <label for="surname-new" class="form-label">Lastname</label>
+                        <input required type="text" class="form-control"
+                               th:field="*{surname}"
+                               id="surname-new"/>
+                    </div>
+                    <div class="pt-2">
+                        <label for="age-new" class="form-label">Age</label>
+                        <input required type="number" class="form-control"
+                               th:field="*{age}"
+                               id="age-new"/>
+                    </div>
+                    <div class="pt-2">
+                        <label for="email-new" class="form-label">Email</label>
+                        <input required type="email" class="form-control"
+                               th:field="*{email}" id="email-new"/>
+                        <div style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                            Email Error
+                        </div>
+                    </div>
+                    <div class="pt-2">
+                        <label for="password-new" class="form-label">Password</label>
+                        <input required type="password" class="form-control"
+                               th:field="*{password}" id="password-new"/>
+                        <div style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">
+                            Password Error
+                        </div>
+                    </div>
+                    <div class="pt-2">
+
+                        <label for="passwordConfirm-new" class="form-label">Confirm
+                            password</label>
+                        <input required type="password" class="form-control"
+                               th:field="*{passwordConfirm}"
+                               id="passwordConfirm-new"/>
+                    </div>
+
+                    <input class="btn btn-success w-50 p-1" type="submit"
+                           value="Register"/>
+                </form>
+            </div>
+        </div>
     </div>
-    <br>
-    <label for="passwordConfirm">Confirm password:</label>
-    <input type="password" th:field="*{passwordConfirm}" id="passwordConfirm"/>
-    <br>
-    <input type="submit" value="CREATE"/>
-</form>
-<a href="/login">Login</a>
+</div>
 </body>
 </html>

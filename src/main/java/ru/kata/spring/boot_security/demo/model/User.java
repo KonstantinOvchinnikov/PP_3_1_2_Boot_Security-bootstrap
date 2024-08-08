@@ -51,7 +51,7 @@ public class User implements UserDetails {
     }
 
     public String getStringAllRoles() {
-        return roles.stream().map(Role::toString).collect(Collectors.joining(", "));
+        return roles.stream().map(Role::toString).collect(Collectors.joining(" "));
 
     }
 
