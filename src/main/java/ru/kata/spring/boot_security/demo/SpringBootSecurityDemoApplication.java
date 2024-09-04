@@ -26,8 +26,8 @@ public class SpringBootSecurityDemoApplication {
         RoleService roleService = context.getBean(RoleService.class);
         MyValidator myValidator = context.getBean(MyValidator.class);
 
-        roleService.saveIfNotExist("USER");
-        roleService.saveIfNotExist("ADMIN");
+        roleService.saveIfNotExist(new Role(1L, "USER"));
+        roleService.saveIfNotExist(new Role(2L, "ADMIN"));
 
         User user = new User();
         Set<Role> roles = new HashSet<>();
@@ -52,8 +52,6 @@ public class SpringBootSecurityDemoApplication {
         if (!myValidator.userInData(admin.getEmail())) {
             userService.saveUser(admin);
         }
-
-
 
     }
 }

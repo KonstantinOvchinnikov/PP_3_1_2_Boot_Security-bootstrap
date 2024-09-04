@@ -23,10 +23,10 @@ public class RoleService {
     }
 
     @Transactional
-    public void saveIfNotExist(String role) {
-        Role myRole = roleRepository.findByRole(role);
+    public void saveIfNotExist(Role role) {
+        Role myRole = roleRepository.findByRole(role.getRole());
         if (myRole == null) {
-            roleRepository.save(new Role(role));
+            roleRepository.save(role);
         }
     }
 
