@@ -1,7 +1,6 @@
 async function getAllUsers() {
     let temporary = '';
     const tableAllUsers = document.querySelector('#tableUsers tbody');
-// await userFetch.findCurrentUser()
     await myFetch.getAllUsers()
         .then(response => response.json())
         .then(users => {

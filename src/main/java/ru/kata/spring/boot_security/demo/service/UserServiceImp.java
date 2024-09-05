@@ -2,7 +2,6 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -53,25 +52,25 @@ public class UserServiceImp implements UserDetailsService {
     }
 
     @Transactional
-    public User loadUserById(long id) {
+    public User findUserById(long id) {
         String hql = "select u from User u where id=:id";
         return em.createQuery(hql, User.class).setParameter("id", id).getSingleResult();
     }
 
     @Transactional
-    public User showUserByLogin(String login) {
+    public User findUserByEmail(String login) {
         String hql = "select u from User u where email=:email";
         return em.createQuery(hql, User.class).setParameter("email", login).getSingleResult();
     }
 
     @Transactional
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public User loadUserByUsername(String username) throws UsernameNotFoundException {
         User myUser = userRepository.findUserByEmailIs(username);
         if (myUser == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        Hibernate.initialize(myUser.getRoles());
+//        Hibernate.initialize(myUser.getRoles());
         return myUser;
     }
 }
