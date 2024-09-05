@@ -39,7 +39,7 @@ public class MyValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
         // Если идет добавление нового пользователя, а не изменение существующего.
-        if (userInData(user.getEmail()) && !Objects.equals(user.getId(), userService.showUserByLogin(user.getEmail()).getId())) {
+        if (userInData(user.getEmail()) && !Objects.equals(user.getId(), userService.findUserByEmail(user.getEmail()).getId())) {
             errors.rejectValue("email", "", "Пользователь с таким почтовым адресом уже существует");
         }
         if (!Objects.equals(user.getPassword(), user.getPasswordConfirm())) {

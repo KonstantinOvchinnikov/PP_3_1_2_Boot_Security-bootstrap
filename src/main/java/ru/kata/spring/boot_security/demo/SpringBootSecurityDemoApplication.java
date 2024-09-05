@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.security.core.userdetails.UserDetails;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.model.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
@@ -52,6 +53,5 @@ public class SpringBootSecurityDemoApplication {
         if (!myValidator.userInData(admin.getEmail())) {
             userService.saveUser(admin);
         }
-
     }
 }
